@@ -20,7 +20,7 @@ server.post('/api/messages', connector.listen());
 
 var DialogLabels = {
     Sales: 'Sales',
-    Success: 'Sucess',
+    Success: 'Success',
     Support: 'Support'
 };
 

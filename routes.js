@@ -28,7 +28,7 @@ module.exports = function(server) {
                         difference: null
                     },
                     avg_first_reply_time: {
-                        data: row.avg_reply_time,
+                        data: Number(row.avg_reply_time).toFixed(2),
                         trend: null,
                         difference: null
                     },
