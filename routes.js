@@ -22,11 +22,31 @@ module.exports = function(server) {
             results.rows.forEach(function(row, i) {
                 support_stats.push({
                     date: row.date,
-                    first_resp_1_hour: (row.replies_1_hour / row.new_tickets * 100).toFixed(2),
-                    avg_first_reply_time: row.avg_reply_time,
-                    new_tickets: row.new_tickets,
-                    solved_tickets: null,
-                    backlog: null
+                    first_resp_1_hour: {
+                        data: (row.replies_1_hour / row.new_tickets * 100).toFixed(2),
+                        trend: null,
+                        difference: null
+                    },
+                    avg_first_reply_time: {
+                        data: row.avg_reply_time,
+                        trend: null,
+                        difference: null
+                    },
+                    new_tickets: {
+                        data: row.new_tickets,
+                        trend: null,
+                        difference: null
+                    },
+                    solved_tickets: {
+                        data: null,
+                        trend: null,
+                        difference: null
+                    },
+                    backlog: {
+                        data: null,
+                        trend: null,
+                        difference: null
+                    }
                 });
             });
             pool.query(`SELECT
@@ -44,7 +64,7 @@ module.exports = function(server) {
                     return console.error('error running query', err);
                 }
                 results.rows.forEach(function(row, i) {
-                    support_stats[i].solved_tickets = row.solved_tickets;
+                    support_stats[i].solved_tickets.data = row.solved_tickets;
                 });
                 pool.query(`SELECT dd.d AS date,
                                     count(*) AS backlog
@@ -61,8 +81,20 @@ module.exports = function(server) {
                         return console.error('error running query', err);
                     }
                     results.rows.forEach(function(row, i) {
-                        support_stats[i].backlog = row.backlog;
+                        support_stats[i].backlog.data = row.backlog;
                     });
+
+                    for (var key in support_stats[0]) {
+                        if (support_stats[0][key].data > support_stats[1][key].data) {
+                            support_stats[0][key].trend = 'increasing';
+                        } else {
+                            support_stats[0][key].trend = 'decreasing';
+                        }
+                        support_stats[0][key].difference = (((support_stats[0][key].data - support_stats[1][key].data) / support_stats[1][key].data) * 100).toFixed(2) + '%';
+
+                        delete support_stats[1][key].difference;
+                        delete support_stats[1][key].trend;
+                    }
                     res.send(support_stats);
                 });
             });
