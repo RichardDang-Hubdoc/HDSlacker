@@ -1,16 +1,12 @@
 var restify = require('restify');
 var builder = require('botbuilder');
+var request = require('request');
 
 module.exports = [
-    // destination
     function(session) {
-        // richards function values will be placed here
-        // then call send
-        //session.send(....);    
-    },
-
-
-
-
-
+        request('http://localhost:3978/support_stats', (err, res, body) => {
+            session.send(body);
+            session.reset();
+        });
+    }
 ];
