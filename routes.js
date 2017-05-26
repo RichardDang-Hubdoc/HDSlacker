@@ -21,7 +21,7 @@ module.exports = function(server) {
             }
             results.rows.forEach(function(row, i) {
                 support_stats.push({
-                    date: row.date,
+                    date: row.date.toISOString().slice(0, 10),
                     first_resp_1_hour: {
                         data: (row.replies_1_hour / row.new_tickets * 100).toFixed(2),
                         trend: null,
