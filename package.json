@@ -9,9 +9,11 @@
   "author": "Richard Dang, Aman Dodd, Ray Chun",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.4.1",
     "botbuilder": "^3.8.3",
     "dotenv": "^4.0.0",
     "pg": "^6.2.3",
+    "request": "^2.81.0",
     "restify": "^4.3.0"
   },
   "devDependencies": {

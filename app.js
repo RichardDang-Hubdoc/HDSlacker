@@ -4,6 +4,7 @@ require('dotenv').config();
 
 // Setup Restify Server
 var server = restify.createServer();
+require('./routes.js')(server);
 server.listen(process.env.port || process.env.PORT || 3978, function() {
     console.log('%s listening to %s', server.name, server.url);
 });
@@ -55,11 +56,9 @@ var bot = new builder.UniversalBot(connector, [
             case DialogLabels.Success:
                 return session.beginDialog('');
             case DialogLabels.Support:
-                return session.beginDialog('')
+                return session.beginDialog('support');
         }
     }
 ]);
 
-require('./routes.js')(server);
-
-bot.dialog('support', require('./support'))
+bot.dialog('support', require('./support'));
