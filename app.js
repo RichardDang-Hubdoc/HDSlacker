@@ -60,5 +60,6 @@ var bot = new builder.UniversalBot(connector, [
     }
 ]);
 
+require('./routes.js')(server);
 
 bot.dialog('support', require('./support'))

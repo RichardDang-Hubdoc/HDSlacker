@@ -1,6 +1,5 @@
 const pool = require('./db.js');
 
-
 module.exports = function(server) {
 
     var support_stats = [];
