@@ -1,5 +1,6 @@
 var restify = require('restify');
 var builder = require('botbuilder');
+require('dotenv').config();
 
 // Setup Restify Server
 var server = restify.createServer();
