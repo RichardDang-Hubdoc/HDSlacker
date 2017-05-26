@@ -58,3 +58,6 @@ var bot = new builder.UniversalBot(connector, [
         }
     }
 ]);
+
+
+bot.dialog('support', require('./support'))
